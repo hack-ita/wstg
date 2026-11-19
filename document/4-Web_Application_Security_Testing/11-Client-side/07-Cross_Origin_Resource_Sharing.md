@@ -171,14 +171,13 @@ Consequently, the browser sees the request coming from `null`, the server allows
 
 #### Verify the browser's credential behavior
 
-`Access-Control-Allow-Credentials: true` is not sufficient on its own to demonstrate authenticated data exposure. The cross-origin request must opt in to credentials (for example, `fetch(..., { credentials: "include" })` or `XMLHttpRequest.withCredentials = true`), and the browser must actually attach an eligible session cookie.
+`Access-Control-Allow-Credentials: true` is not sufficient on its own to demonstrate authenticated data exposure. The cross-origin request must opt in to credentials (for example, `fetch(..., { credentials: "include" })` or `XMLHttpRequest.withCredentials = true`), and the browser must actually attach an eligible session cookie. See the MDN guidance on [including credentials in Fetch requests](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#including_credentials).
 
-For cookie-based sessions, check the `SameSite` and `Secure` attributes and the browser's third-party-cookie policy. These restrictions can affect ordinary cross-origin requests and sandboxed contexts with a `null` origin differently. Do not infer cookie delivery from the response headers alone.
+For cookie-based sessions, check the `SameSite` and `Secure` attributes and the browser's [third-party-cookie policy](https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Third-party_cookies). Setting `credentials: "include"` does not override `SameSite=Lax` or `SameSite=Strict` restrictions for cross-site Fetch requests, and browser privacy controls may block third-party cookies even when the server permits credentialed CORS. A sandboxed context with a `null` origin may also have a different site-for-cookies context from a normal page. See the MDN [Set-Cookie reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value).
 
 During validation, reproduce the request from a browser context that matches the suspected attack, inspect the request in the browser's network tools to confirm whether the session cookie was sent, and verify whether JavaScript can read sensitive data from the response. If the browser does not attach an authenticated session, the reflected origin does not, by itself, prove authenticated data theft.
 
 A practical local lab covering reflected and `null` origins, weak Origin checks, browser-based proof of concepts, and cookie behavior with `SameSite` settings is available in the [CORS misconfiguration walkthrough](https://en.hackita.it/articoli/cors-misconfiguration/).
-
 ### Input Validation Weakness
 
 The CORS concept can be viewed from a completely different angle. An attacker may allow their CORS policy on purpose to inject code to the target web application.
