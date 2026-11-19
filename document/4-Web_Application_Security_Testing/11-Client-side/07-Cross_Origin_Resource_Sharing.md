@@ -173,7 +173,7 @@ Consequently, the browser sees the request coming from `null`, the server allows
 
 `Access-Control-Allow-Credentials: true` is not sufficient on its own to demonstrate authenticated data exposure. The cross-origin request must opt in to credentials (for example, `fetch(..., { credentials: "include" })` or `XMLHttpRequest.withCredentials = true`), and the browser must actually attach an eligible session cookie.
 
-For cookie-based sessions, check the `SameSite` and `Secure` attributes and the browser's third-party-cookie policy. These restrictions can affect ordinary cross-origin requests and sandboxed `null)-origin contexts differently. Do not infer cookie delivery from the response headers alone.
+For cookie-based sessions, check the `SameSite` and `Secure` attributes and the browser's third-party-cookie policy. These restrictions can affect ordinary cross-origin requests and sandboxed contexts with a `null` origin differently. Do not infer cookie delivery from the response headers alone.
 
 During validation, reproduce the request from a browser context that matches the suspected attack, inspect the request in the browser's network tools to confirm whether the session cookie was sent, and verify whether JavaScript can read sensitive data from the response. If the browser does not attach an authenticated session, the reflected origin does not, by itself, prove authenticated data theft.
 
