@@ -24,6 +24,7 @@
 ## Tutorials
 
 - [Practical sqlmap Guide by HackITA](https://en.hackita.it/articoli/sqlmap/) - A hands-on guide covering request handling, injection techniques, database enumeration, data extraction, tamper scripts, troubleshooting, and a local lab.
+- [NoSQL Injection Guide (Italian) by HackITA](https://hackita.it/articoli/nosql-injection/) - A practical MongoDB-focused guide covering query-operator injection, authentication bypass, blind extraction with `$regex`, `$where` behavior, Burp Suite testing, and defensive controls.
 
 ## Useful Sites
 
